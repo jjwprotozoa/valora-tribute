@@ -440,7 +440,7 @@
         </section>
 
         <section class="tiers">
-            <div class="tier" onclick="selectTier('supporter')" data-tier="supporter">
+            <div class="tier" onclick="window.open('https://wise.com/pay/r/1h6meJpYrFBOeRA', '_blank')">
                 <div class="tier-icon">✨</div>
                 <div class="tier-name">Acknowledged</div>
                 <div class="tier-price">$25</div>
@@ -453,7 +453,7 @@
                     <div class="qr-instruction">Or tap to open payment</div>
                 </div>
             </div>
-            <div class="tier" onclick="selectTier('patron')" data-tier="patron">
+            <div class="tier" onclick="window.open('https://wise.com/pay/r/Wvvvfp7v7n6CZ64', '_blank')">
                 <div class="tier-icon">💎</div>
                 <div class="tier-name">Valued</div>
                 <div class="tier-price">$50</div>
@@ -466,7 +466,7 @@
                     <div class="qr-instruction">Or tap to open payment</div>
                 </div>
             </div>
-            <div class="tier" onclick="selectTier('exclusive')" data-tier="exclusive">
+            <div class="tier" onclick="window.open('https://wise.com/pay/r/brVoyBVDEEoMCzQ', '_blank')">
                 <div class="tier-icon">👑</div>
                 <div class="tier-name">Essential</div>
                 <div class="tier-price">$100</div>
@@ -479,7 +479,7 @@
                     <div class="qr-instruction">Or tap to open payment</div>
                 </div>
             </div>
-            <div class="tier" onclick="selectTier('spoil')" data-tier="spoil" style="background: rgba(147, 51, 234, 0.1); border-color: rgba(147, 51, 234, 0.4);">
+            <div class="tier" onclick="window.open('https://wise.com/pay/business/fluidinvestmentgroupllc', '_blank')" style="background: rgba(147, 51, 234, 0.1); border-color: rgba(147, 51, 234, 0.4);">
                 <div class="tier-icon">💸</div>
                 <div class="tier-name">Spoil Me</div>
                 <div class="tier-price">Your Choice</div>
@@ -495,8 +495,8 @@
         </section>
 
         <section class="cta-section">
-            <button class="cta-button" onclick="handleSupport()">Claim Your Place</button>
-            <p class="cta-subtitle">Some doors only open once. Others never close for the right person.</p>
+            <button class="cta-button" onclick="window.open('https://t.me/obeyvalora', '_blank')">Contact Me</button>
+            <p class="cta-subtitle">Ready to begin? Message me directly on Telegram.</p>
         </section>
 
         <form class="message-form" onsubmit="handleMessage(event)">
@@ -555,176 +555,6 @@
             }
         }
 
-        let selectedTier = null;
-
-        function selectTier(tier) {
-            selectedTier = tier;
-            
-            // Remove previous selections
-            document.querySelectorAll('.tier').forEach(el => {
-                el.classList.remove('selected');
-            });
-            
-            // Highlight selected tier
-            event.target.closest('.tier').classList.add('selected');
-            
-            console.log('Selected tier:', tier);
-        }
-
-        function handleSupport() {
-            // Real Wise payment links
-            const tierLinks = {
-                supporter: 'https://wise.com/pay/r/1h6meJpYrFBOeRA',  // $25
-                patron: 'https://wise.com/pay/r/Wvvvfp7v7n6CZ64',     // $50
-                exclusive: 'https://wise.com/pay/r/brVoyBVDEEoMCzQ',   // $100
-                spoil: 'https://wise.com/pay/business/fluidinvestmentgroupllc' // Custom amounts
-            };
-            
-            if (selectedTier && tierLinks[selectedTier]) {
-                // Show loading state
-                const button = document.querySelector('.cta-button');
-                const originalText = button.innerHTML;
-                button.innerHTML = '<span class="loading-spinner"></span>Opening payment...';
-                button.disabled = true;
-                
-                // Track the conversion
-                trackConversion(selectedTier);
-                
-                // Open payment in new tab
-                window.open(tierLinks[selectedTier], '_blank');
-                
-                // Reset button after delay
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.disabled = false;
-                }, 2000);
-                
-                // Show confirmation message
-                showConfirmationMessage(selectedTier);
-                
-                // Guide them to contact after payment
-                setTimeout(() => {
-                    showContactPrompt();
-                }, 3000);
-            } else {
-                // Show tier selection prompt
-                showTierSelectionPrompt();
-                highlightTiers();
-            }
-        }
-        
-        function showTierSelectionPrompt() {
-            const existingPrompt = document.querySelector('.tier-prompt');
-            if (existingPrompt) return;
-            
-            const prompt = document.createElement('div');
-            prompt.className = 'tier-prompt';
-            prompt.style.cssText = `
-                text-align: center; margin-top: 1rem; 
-                color: #c084fc; font-style: italic;
-                animation: fadeIn 0.3s ease-out;
-            `;
-            prompt.innerHTML = '↑ Please select your preferred tier first';
-            
-            document.querySelector('.cta-section').appendChild(prompt);
-            
-            setTimeout(() => {
-                if (prompt.parentNode) {
-                    prompt.style.animation = 'fadeOut 0.3s ease-in forwards';
-                    setTimeout(() => prompt.remove(), 300);
-                }
-            }, 4000);
-        }
-        
-        function highlightTiers() {
-            document.querySelectorAll('.tier').forEach((tier, index) => {
-                setTimeout(() => {
-                    tier.style.animation = 'pulse 0.5s ease-in-out';
-                    setTimeout(() => tier.style.animation = '', 500);
-                }, index * 100);
-            });
-        }
-        
-        function showContactPrompt() {
-            const prompt = document.createElement('div');
-            prompt.style.cssText = `
-                position: fixed; bottom: 20px; right: 20px; 
-                background: linear-gradient(45deg, #9333ea, #ec4899);
-                color: white; padding: 1rem; border-radius: 10px;
-                box-shadow: 0 5px 20px rgba(147, 51, 234, 0.4);
-                z-index: 1000; max-width: 300px; animation: slideIn 0.3s ease-out;
-            `;
-            prompt.innerHTML = `
-                <p style="margin-bottom: 0.5rem; font-weight: bold;">Next Step:</p>
-                <p style="font-size: 0.9rem; margin-bottom: 1rem;">Message me on Telegram with your payment confirmation</p>
-                <button onclick="window.open('https://t.me/obeyvalora', '_blank'); this.parentElement.remove();" 
-                        style="background: rgba(255,255,255,0.2); border: none; padding: 0.5rem 1rem; border-radius: 5px; color: white; cursor: pointer; width: 100%;">
-                    Open Telegram
-                </button>
-            `;
-            
-            document.body.appendChild(prompt);
-            
-            setTimeout(() => {
-                if (prompt.parentNode) {
-                    prompt.style.animation = 'slideOut 0.3s ease-in forwards';
-                    setTimeout(() => prompt.remove(), 300);
-                }
-            }, 12000);
-        }
-        
-        function trackConversion(tier) {
-            // Analytics tracking (privacy-first)
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'tier_selected', {
-                    'tier_type': tier,
-                    'value': getTierValue(tier)
-                });
-            }
-            
-            // Local storage backup for analytics
-            const conversions = JSON.parse(localStorage.getItem('valoraConversions') || '[]');
-            conversions.push({
-                tier: tier,
-                timestamp: new Date().toISOString(),
-                referrer: document.referrer,
-                utm_source: new URLSearchParams(window.location.search).get('utm_source')
-            });
-            localStorage.setItem('valoraConversions', JSON.stringify(conversions));
-        }
-        
-        function getTierValue(tier) {
-            const values = { supporter: 25, patron: 50, exclusive: 100 };
-            return values[tier] || 0;
-        }
-        
-        function showConfirmationMessage(tier) {
-            const message = document.createElement('div');
-            message.style.cssText = `
-                position: fixed; top: 20px; right: 20px; 
-                background: linear-gradient(45deg, #9333ea, #ec4899);
-                color: white; padding: 1rem 1.5rem; border-radius: 10px;
-                box-shadow: 0 5px 20px rgba(147, 51, 234, 0.4);
-                z-index: 1000; animation: slideIn 0.3s ease-out;
-                font-weight: bold;
-            `;
-            
-            const tierNames = {
-                supporter: 'Acknowledged',
-                patron: 'Valued',
-                exclusive: 'Essential',
-                spoil: 'Spoil Me'
-            };
-            
-            message.innerHTML = `✨ Thank you! Your ${tierNames[tier]} tier is opening...`;
-            document.body.appendChild(message);
-            
-            setTimeout(() => {
-                message.style.animation = 'slideOut 0.3s ease-in forwards';
-                setTimeout(() => message.remove(), 300);
-            }, 3000);
-        }
-
         function handleMessage(event) {
             event.preventDefault();
             
@@ -733,7 +563,6 @@
                 username: formData.get('username') || 'Anonymous',
                 message: formData.get('message') || 'No message',
                 motivation: formData.get('motivation') || 'Not specified',
-                selectedTier: selectedTier || 'None selected',
                 timestamp: new Date().toISOString(),
                 referrer: document.referrer || 'Direct'
             };
@@ -778,3 +607,88 @@
                 z-index: 9999; text-align: center; max-width: 400px;
                 animation: fadeIn 0.5s ease-out;
             `;
+            success.innerHTML = `
+                <h3 style="margin-bottom: 1rem;">Message Received</h3>
+                <p style="margin-bottom: 1.5rem;">Your words have been noted. You'll hear from me when the time is right.</p>
+                <button onclick="this.parentElement.remove()" 
+                        style="background: rgba(255,255,255,0.2); border: none; padding: 0.8rem 1.5rem; border-radius: 25px; color: white; cursor: pointer;">
+                    Understood
+                </button>
+            `;
+            
+            document.body.appendChild(success);
+            
+            setTimeout(() => {
+                if (success.parentNode) success.remove();
+            }, 5000);
+        }
+
+        // Initialize particles and exit intent when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            setupExitIntent();
+        });
+        
+        function setupExitIntent() {
+            let exitShown = false;
+            
+            document.addEventListener('mouseleave', function(e) {
+                if (e.clientY <= 0 && !exitShown) {
+                    exitShown = true;
+                    showExitMessage();
+                }
+            });
+        }
+        
+        function showExitMessage() {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0, 0, 0, 0.9); z-index: 9999;
+                display: flex; align-items: center; justify-content: center;
+                animation: fadeIn 0.5s ease-out;
+            `;
+            
+            const message = document.createElement('div');
+            message.style.cssText = `
+                background: linear-gradient(135deg, #2d1b69 0%, #11001a 100%);
+                border: 2px solid #9333ea; border-radius: 15px;
+                padding: 3rem; text-align: center; color: #e8e3f0;
+                max-width: 500px; margin: 2rem;
+            `;
+            
+            message.innerHTML = `
+                <h2 style="color: #c084fc; margin-bottom: 1rem; font-size: 1.8rem;">
+                    Leaving So Soon?
+                </h2>
+                <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">
+                    You're free to go, of course. But something tells me you'll find yourself 
+                    thinking about this moment later tonight. 
+                </p>
+                <p style="font-style: italic; opacity: 0.8; margin-bottom: 2rem;">
+                    The door remains open... for now.
+                </p>
+                <button onclick="closeExitMessage()" style="
+                    background: linear-gradient(45deg, #9333ea, #ec4899);
+                    border: none; padding: 0.8rem 2rem; border-radius: 25px;
+                    color: white; font-weight: bold; cursor: pointer;
+                    margin-right: 1rem;
+                ">Stay a Moment</button>
+                <button onclick="window.close()" style="
+                    background: transparent; border: 1px solid #666;
+                    padding: 0.8rem 2rem; border-radius: 25px;
+                    color: #999; cursor: pointer;
+                ">I'll Remember</button>
+            `;
+            
+            overlay.appendChild(message);
+            document.body.appendChild(overlay);
+        }
+        
+        window.closeExitMessage = function() {
+            const overlay = document.querySelector('div[style*="z-index: 9999"]');
+            if (overlay) {
+                overlay.style.animation = 'fadeOut 0.3s ease-in forwards';
+                setTimeout(() => overlay.remove(), 300);
+            }
+        }
