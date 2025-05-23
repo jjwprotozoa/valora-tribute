@@ -499,7 +499,7 @@
             <p class="cta-subtitle">Ready to begin? Message me directly through my bot.</p>
         </section>
 
-        <form class="message-form" onsubmit="handleMessage(event); return false;">
+        <form class="message-form" method="post" action="#" id="messageForm">
             <h3 style="text-align: center; margin-bottom: 1.5rem; color: #c084fc;">Share Your Thoughts (Optional)</h3>
             
             <div class="form-group">
@@ -517,7 +517,7 @@
                 <input type="text" id="motivation" name="motivation" placeholder="Power? Control? The thrill of surrender?">
             </div>
             
-            <button type="submit" style="width: 100%; padding: 1rem; background: linear-gradient(45deg, #9333ea, #ec4899); border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer;">
+            <button type="submit" id="submitBtn" style="width: 100%; padding: 1rem; background: linear-gradient(45deg, #9333ea, #ec4899); border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer;">
                 Submit Message
             </button>
         </form>
@@ -713,11 +713,108 @@
             }, 5000);
         }
 
-        // Initialize particles and exit intent when page loads
+        // Initialize particles and form handler when page loads
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
             setupExitIntent();
+            setupFormHandler();
         });
+        
+        function setupFormHandler() {
+            const form = document.getElementById('messageForm');
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevent default form submission
+                    handleMessage(event);
+                });
+            }
+        }
+
+        function handleMessage(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = {
+                username: formData.get('username') || 'Anonymous',
+                message: formData.get('message') || 'No message',
+                motivation: formData.get('motivation') || 'Not specified',
+                timestamp: new Date().toISOString(),
+                referrer: document.referrer || 'Direct'
+            };
+            
+            // Show loading state
+            const submitButton = document.getElementById('submitBtn');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<span class="loading-spinner"></span>Sending to Telegram...';
+            submitButton.disabled = true;
+            
+            // Send to Telegram
+            sendToTelegramBot(data)
+                .then(response => response.json())
+                .then(result => {
+                    console.log('Telegram response:', result);
+                    if (result.ok) {
+                        // Success - show success message and offer Telegram link
+                        showTelegramSuccess();
+                    } else {
+                        throw new Error('Telegram API error: ' + result.description);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending to Telegram:', error);
+                    // Fallback - store locally and show alternative success
+                    storeMessage(data);
+                    showFallbackSuccess();
+                })
+                .finally(() => {
+                    // Reset form and button
+                    event.target.reset();
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                });
+        }
+        
+        function showFallbackSuccess() {
+            // Fallback success message if Telegram fails
+            const success = document.createElement('div');
+            success.setAttribute('data-popup', 'success');
+            success.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                background: rgba(0, 0, 0, 0.8); z-index: 99999;
+                display: flex; align-items: center; justify-content: center;
+                animation: fadeIn 0.3s ease-out;
+            `;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                background: linear-gradient(45deg, #9333ea, #ec4899);
+                color: white; padding: 2.5rem; border-radius: 15px;
+                box-shadow: 0 20px 50px rgba(147, 51, 234, 0.7);
+                text-align: center; max-width: 450px; margin: 1rem;
+            `;
+            
+            modal.innerHTML = `
+                <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">Message Saved ✨</h3>
+                <p style="margin-bottom: 2rem; line-height: 1.5; opacity: 0.95;">Your message has been captured. Contact me directly to ensure I receive it.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="window.open('https://t.me/valoravault_bot', '_blank'); closeSuccessPopup();" 
+                            style="background: rgba(255,255,255,0.2); border: none; padding: 1rem 1.5rem; border-radius: 25px; color: white; cursor: pointer; font-weight: bold; flex: 1; min-width: 140px;">
+                        💬 Message Me Now
+                    </button>
+                    <button onclick="closeSuccessPopup()" 
+                            style="background: transparent; border: 1px solid rgba(255,255,255,0.4); padding: 1rem 1.5rem; border-radius: 25px; color: white; cursor: pointer; flex: 1; min-width: 100px;">
+                        Close
+                    </button>
+                </div>
+            `;
+            
+            success.appendChild(modal);
+            document.body.appendChild(success);
+            
+            setTimeout(() => {
+                closeSuccessPopup();
+            }, 10000);
+        }
         
         function setupExitIntent() {
             let exitShown = false;
