@@ -1,0 +1,23 @@
+.qr-code.supporter {
+  background-image: url('/assets/images/qr/25.png');
+}
+.qr-code.patron {
+  background-image: url('/assets/images/qr/50.png');
+}
+.qr-code.exclusive {
+  background-image: url('/assets/images/qr/100.png');
+}
+.qr-code.spoil {
+  background-image: url('/assets/images/qr/spoil.png');
+}
+.qr-code {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 120px;
+  height: 120px;
+  background-color: white;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 0.5rem;
+}
