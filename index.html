@@ -1,10 +1,138 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="refresh" content="0; URL='https://wise.com/pay/r/5xyos4XQF254Gx4'" />
-    <title>Redirecting to Valora</title>
-  </head>
-  <body>
-    <p>Redirecting to Valora…</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valora Vale | Enter the Vault</title>
+  <meta name="description" content="Join Valora Vale's exclusive community. Premium digital experiences, curated content, and elegant connections await." />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./qr-codes.css" />
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+  <div class="container">
+    <header class="header">
+      <h1 class="logo">Valora Vale</h1>
+      <p class="tagline">Where elegance meets exclusivity</p>
+    </header>
+
+    <section class="welcome">
+      <h2>You Found Something Rare</h2>
+      <p>Most people scroll past without a second thought. But you paused. You're reading this. That tells me something about you—you recognize quality when you see it, even when it's quietly waiting to be discovered.</p>
+      <p style="margin-top: 1rem; font-style: italic; opacity: 0.8;">The question isn't whether you can afford to join. It's whether you can afford not to.</p>
+    </section>
+
+    <section class="tiers">
+      <div class="tier" onclick="selectTier('supporter')">
+        <div class="tier-icon">✨</div>
+        <div class="tier-name">Acknowledged</div>
+        <div class="tier-price">$25</div>
+        <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">You exist in my world</div>
+        <div class="qr-overlay">
+          <div class="qr-code supporter"></div>
+          <div class="qr-text">Scan to Pay $25</div>
+          <div class="qr-instruction">Or click to open payment</div>
+        </div>
+      </div>
+
+      <div class="tier" onclick="selectTier('patron')">
+        <div class="tier-icon">💎</div>
+        <div class="tier-name">Valued</div>
+        <div class="tier-price">$50</div>
+        <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">You understand rarity</div>
+        <div class="qr-overlay">
+          <div class="qr-code patron"></div>
+          <div class="qr-text">Scan to Pay $50</div>
+          <div class="qr-instruction">Or click to open payment</div>
+        </div>
+      </div>
+
+      <div class="tier" onclick="selectTier('exclusive')">
+        <div class="tier-icon">👑</div>
+        <div class="tier-name">Essential</div>
+        <div class="tier-price">$100</div>
+        <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">You get it completely</div>
+        <div class="qr-overlay">
+          <div class="qr-code exclusive"></div>
+          <div class="qr-text">Scan to Pay $100</div>
+          <div class="qr-instruction">Or click to open payment</div>
+        </div>
+      </div>
+
+      <div class="tier" onclick="selectTier('spoil')" style="background: rgba(147, 51, 234, 0.1); border-color: rgba(147, 51, 234, 0.4);">
+        <div class="tier-icon">💸</div>
+        <div class="tier-name">Spoil Me</div>
+        <div class="tier-price">Your Choice</div>
+        <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Show your devotion</div>
+        <div class="qr-overlay">
+          <div class="qr-code spoil"></div>
+          <div class="qr-text">Choose your amount</div>
+          <div class="qr-instruction">Or click to open tribute</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <a href="#" class="cta-button" onclick="handleSupport()">Claim Your Place</a>
+      <p class="cta-subtitle">Some doors only open once. Others never close for the right person.</p>
+    </section>
+
+    <form class="message-form" onsubmit="handleMessage(event)">
+      <h3 style="text-align: center; margin-bottom: 1.5rem; color: #c084fc;">Share Your Thoughts (Optional)</h3>
+      <div class="form-group">
+        <label for="username">How shall I address you?</label>
+        <input type="text" id="username" name="username" placeholder="Your chosen name..." />
+      </div>
+      <div class="form-group">
+        <label for="message">Confess your thoughts</label>
+        <textarea id="message" name="message" rows="4" placeholder="Tell me what draws you here. What do you seek from me?"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="motivation">What compels your devotion?</label>
+        <input type="text" id="motivation" name="motivation" placeholder="Power? Control? The thrill of surrender?" />
+      </div>
+      <button type="submit" class="cta-button">Submit Message</button>
+    </form>
+
+    <footer class="footer">
+      <div style="margin-bottom: 1rem;">
+        <a href="https://www.instagram.com/obeyvalora/" target="_blank">📸 Instagram</a>
+        <a href="https://www.threads.com/@obeyvalora" target="_blank">🧵 Threads</a>
+        <a href="https://t.me/obeyvalora" target="_blank">💬 Telegram</a>
+      </div>
+      <p>© 2025 Valora Vale. Crafted with intention and care.</p>
+    </footer>
+  </div>
+
+  <script>
+    let selectedTier = null;
+
+    function selectTier(tier) {
+      selectedTier = tier;
+      document.querySelectorAll('.tier').forEach(el => el.style.borderColor = 'transparent');
+      event.target.closest('.tier').style.borderColor = '#9333ea';
+    }
+
+    function handleSupport() {
+      const tierLinks = {
+        supporter: 'https://tribute.valoravale.com/25',
+        patron: 'https://tribute.valoravale.com/50',
+        exclusive: 'https://tribute.valoravale.com/100',
+        spoil: 'https://tribute.valoravale.com/spoil'
+      };
+      if (selectedTier && tierLinks[selectedTier]) {
+        window.open(tierLinks[selectedTier], '_blank');
+      } else {
+        alert('Choose your tier first, devotion requires intention.');
+      }
+    }
+
+    function handleMessage(event) {
+      event.preventDefault();
+      alert('Thank you. Your message was received.');
+    }
+  </script>
+</body>
 </html>
