@@ -1,71 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Valora Vale | Enter the Vault - Premium Digital Experiences</title>
-  <meta name="description" content="Join Valora Vale's exclusive community. Premium digital experiences, curated content, and elegant connections await." />
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="valora_favicon.svg" />
-  <link rel="preload" href="valora_favicon.svg" as="image" type="image/svg+xml" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" /> <!-- optional fallback PNG -->
-
-  <!-- Open Graph for social media -->
-  <meta property="og:title" content="Valora Vale | Enter the Vault - Premium Digital Experiences" />
-  <meta property="og:description" content="Join Valora Vale's exclusive community. Premium digital experiences, curated content, and elegant connections await." />
-  <meta property="og:image" content="https://valoravale.com/preview.jpg" />
-  <meta property="og:url" content="https://tribute.valoravale.com" />
-  <meta property="og:type" content="website" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Valora Vale | Enter the Vault - Premium Digital Experiences" />
-  <meta name="twitter:description" content="Join Valora Vale's exclusive community. Premium digital experiences, curated content, and elegant connections await." />
-  <meta name="twitter:image" content="https://valoravale.com/preview.jpg" />
-
-  <!-- Theme color (mobile browser coloring) -->
-  <meta name="theme-color" content="#2d1b69" media="(prefers-color-scheme: dark)" />
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-
-  <!-- Structured Data (JSON-LD Schema.org) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Valora Vale",
-    "url": "https://tribute.valoravale.com",
-    "sameAs": [
-      "https://www.instagram.com/obeyvalora/",
-      "https://www.threads.com/@obeyvalora",
-      "https://t.me/obeyvalora"
-    ],
-    "description": "Premium digital experiences, exclusive content creator, and elegant community builder.",
-    "offers": {
-      "@type": "Offer",
-      "name": "Community Membership",
-      "description": "Exclusive access to premium content and community experiences",
-      "price": "25",
-      "priceCurrency": "USD"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valora Vale | Enter the Vault - Premium Digital Experiences</title>
+    <meta name="description" content="Join Valora Vale's exclusive community. Premium digital experiences, curated content, and elegant connections await.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Valora Vale | Enter the Vault">
+    <meta property="og:description" content="Exclusive digital experiences and premium community access. Join those who appreciate the extraordinary.">
+    <meta property="og:image" content="https://yourcdn.com/valora-preview.jpg">
+    <meta property="og:url" content="https://tribute.valoravale.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Valora Vale | Enter the Vault">
+    <meta name="twitter:description" content="Exclusive digital experiences and premium community access.">
+    <meta name="twitter:image" content="https://yourcdn.com/valora-preview.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Valora Vale",
+        "url": "https://tribute.valoravale.com",
+        "sameAs": [
+            "https://www.instagram.com/obeyvalora/",
+            "https://www.threads.com/@obeyvalora"
+        ],
+        "description": "Premium digital experiences, exclusive content creator, and elegant community builder.",
+        "offers": {
+            "@type": "Offer",
+            "name": "Community Membership",
+            "description": "Exclusive access to premium content and community experiences",
+            "price": "25",
+            "priceCurrency": "USD"
+        }
     }
-  }
-  </script>
+    </script>
     <style>
-.qr-code.supporter {
-  background-image: url('./assets/images/qr/25.png');
-}
-
-.qr-code.patron {
-  background-image: url('./assets/images/qr/50.png');
-}
-
-.qr-code.exclusive {
-  background-image: url('./assets/images/qr/100.png');
-}
-
-.qr-code.spoil {
-  background-image: url('./assets/images/qr/spoil.png');
-}
         * {
             margin: 0;
             padding: 0;
