@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valora Vale | Enter the Vault - Premium Digital Experiences</title>
+  <meta name="description" content="Join Valora Vale's exclusive community. Premium digital experiences, curated content, and elegant connections await." />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="valora_favicon.svg" />
+  <link rel="preload" href="valora_favicon.svg" as="image" type="image/svg+xml" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Valora Vale | Enter the Vault" />
+  <meta property="og:description" content="Exclusive digital experiences and premium community access. Join those who appreciate the extraordinary." />
+  <meta property="og:image" content="https://yourcdn.com/valora-preview.jpg" />
+  <meta property="og:url" content="https://tribute.valoravale.com" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Valora Vale | Enter the Vault" />
+  <meta name="twitter:description" content="Exclusive digital experiences and premium community access." />
+  <meta name="twitter:image" content="https://yourcdn.com/valora-preview.jpg" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Valora Vale",
+    "url": "https://tribute.valoravale.com",
+    "sameAs": [
+      "https://www.instagram.com/obeyvalora/",
+      "https://www.threads.com/@obeyvalora"
+    ],
+    "description": "Premium digital experiences, exclusive content creator, and elegant community builder.",
+    "offers": {
+      "@type": "Offer",
+      "name": "Community Membership",
+      "description": "Exclusive access to premium content and community experiences",
+      "price": "25",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #2d1b69 0%, #11001a 100%);
+      color: #e8e3f0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 3rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #9333ea, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+
+    .tiers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .tier {
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid transparent;
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .tier:hover {
+      border-color: #9333ea;
+      box-shadow: 0 10px 30px rgba(147, 51, 234, 0.3);
+    }
+
+    .tier-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .tier-name { font-size: 1.1rem; font-weight: bold; color: #c084fc; }
+    .tier-price { font-size: 1.3rem; color: #e8e3f0; }
+
+    .qr-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .tier:hover .qr-overlay {
+      opacity: 1;
+    }
+
+    .qr-code {
+      width: 100px;
+      height: 100px;
+      background: white;
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .qr-code img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .qr-text {
+      color: #c084fc;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .qr-overlay { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="logo">Valora Vale</h1>
+      <p class="tagline">Where elegance meets exclusivity</p>
+    </header>
+
+    <section class="tiers" id="tiers">
+      <div class="tier" onclick="window.open('https://wise.com/pay/r/1h6meJpYrFBOeRA', '_blank')">
+        <div class="tier-icon">✨</div>
+        <div class="tier-name">Acknowledged</div>
+        <div class="tier-price">$25</div>
+        <div class="qr-overlay">
+          <div class="qr-code">
+            <img src="https://raw.githubusercontent.com/jjwprotozoa/valora-tribute/main/assets/images/qr/25.png" alt="QR for $25">
+          </div>
+          <div class="qr-text">Scan to pay with your phone</div>
+        </div>
+      </div>
+
+      <div class="tier" onclick="window.open('https://wise.com/pay/r/Wvvvfp7v7n6CZ64', '_blank')">
+        <div class="tier-icon">💎</div>
+        <div class="tier-name">Valued</div>
+        <div class="tier-price">$50</div>
+        <div class="qr-overlay">
+          <div class="qr-code">
+            <img src="https://raw.githubusercontent.com/jjwprotozoa/valora-tribute/main/assets/images/qr/50.png" alt="QR for $50">
+          </div>
+          <div class="qr-text">Scan to pay with your phone</div>
+        </div>
+      </div>
+
+      <div class="tier" onclick="window.open('https://wise.com/pay/r/brVoyBVDEEoMCzQ', '_blank')">
+        <div class="tier-icon">👑</div>
+        <div class="tier-name">Essential</div>
+        <div class="tier-price">$100</div>
+        <div class="qr-overlay">
+          <div class="qr-code">
+            <img src="https://raw.githubusercontent.com/jjwprotozoa/valora-tribute/main/assets/images/qr/100.png" alt="QR for $100">
+          </div>
+          <div class="qr-text">Scan to pay with your phone</div>
+        </div>
+      </div>
+
+      <div class="tier" onclick="window.open('https://wise.com/pay/business/fluidinvestmentgroupllc', '_blank')">
+        <div class="tier-icon">💸</div>
+        <div class="tier-name">Spoil Me</div>
+        <div class="tier-price">Your Choice</div>
+        <div class="qr-overlay">
+          <div class="qr-code">
+            <img src="https://raw.githubusercontent.com/jjwprotozoa/valora-tribute/main/assets/images/qr/spoil.png" alt="QR for spoil">
+          </div>
+          <div class="qr-text">Scan to pay any amount</div>
+        </div>
+      </div>
+    </section>
+
+    <a href="#tiers" class="cta-button" style="
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #9333ea, #ec4899);
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
+    ">Claim Your Place</a>
+  </div>
+</body>
+</html>
