@@ -495,8 +495,8 @@
         </section>
 
         <section class="cta-section">
-            <button class="cta-button" onclick="window.open('https://t.me/obeyvalora', '_blank')">Contact Me</button>
-            <p class="cta-subtitle">Ready to begin? Message me directly on Telegram.</p>
+            <button class="cta-button" onclick="window.open('https://t.me/valoravault_bot', '_blank')">Contact Me</button>
+            <p class="cta-subtitle">Ready to begin? Message me directly through my bot.</p>
         </section>
 
         <form class="message-form" onsubmit="handleMessage(event)">
@@ -555,6 +555,30 @@
             }
         }
 
+        function sendToTelegramBot(data) {
+            const BOT_TOKEN = '7572576224:AAF7HGD_1bqhzHSgOEkK_9Z7YK2VxcVGudY';
+            const CHAT_ID = '5661776474';
+            
+            const message = `
+🌟 <b>New Tribute Form Submission</b>
+👤 <b>Name:</b> ${data.username}
+💭 <b>Message:</b> ${data.message}
+🎯 <b>Motivation:</b> ${data.motivation}
+🕐 <b>Time:</b> ${new Date(data.timestamp).toLocaleString()}
+🔗 <b>Source:</b> ${data.referrer || 'Direct'}
+            `;
+            
+            return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            });
+        }
+
         function handleMessage(event) {
             event.preventDefault();
             
@@ -570,21 +594,62 @@
             // Show loading state
             const submitButton = event.target.querySelector('button[type="submit"]');
             const originalText = submitButton.innerHTML;
-            submitButton.innerHTML = '<span class="loading-spinner"></span>Sending...';
+            submitButton.innerHTML = '<span class="loading-spinner"></span>Sending to Telegram...';
             submitButton.disabled = true;
             
-            // Store message locally as backup
-            storeMessage(data);
+            // Send to Telegram
+            sendToTelegramBot(data)
+                .then(response => response.json())
+                .then(result => {
+                    if (result.ok) {
+                        // Success - show success message and offer Telegram link
+                        showTelegramSuccess();
+                    } else {
+                        throw new Error('Telegram API error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending to Telegram:', error);
+                    // Fallback - store locally and show alternative success
+                    storeMessage(data);
+                    showSubmissionSuccess();
+                })
+                .finally(() => {
+                    // Reset form and button
+                    event.target.reset();
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                });
+        }
+        
+        function showTelegramSuccess() {
+            const success = document.createElement('div');
+            success.style.cssText = `
+                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                background: linear-gradient(45deg, #9333ea, #ec4899);
+                color: white; padding: 2rem; border-radius: 15px;
+                box-shadow: 0 10px 30px rgba(147, 51, 234, 0.5);
+                z-index: 9999; text-align: center; max-width: 400px;
+                animation: fadeIn 0.5s ease-out;
+            `;
+            success.innerHTML = `
+                <h3 style="margin-bottom: 1rem;">Message Sent ✨</h3>
+                <p style="margin-bottom: 1.5rem;">Your devotion has reached me directly. I've received your message and will respond when I see fit.</p>
+                <button onclick="window.open('https://t.me/valoravault_bot', '_blank')" 
+                        style="background: rgba(255,255,255,0.2); border: none; padding: 0.8rem 1.5rem; border-radius: 25px; color: white; cursor: pointer; margin-right: 0.5rem; font-weight: bold;">
+                    Open My Bot
+                </button>
+                <button onclick="this.parentElement.remove()" 
+                        style="background: transparent; border: 1px solid rgba(255,255,255,0.3); padding: 0.8rem 1.5rem; border-radius: 25px; color: white; cursor: pointer;">
+                    Close
+                </button>
+            `;
             
-            // Show success message
+            document.body.appendChild(success);
+            
             setTimeout(() => {
-                showSubmissionSuccess();
-                
-                // Reset form and button
-                event.target.reset();
-                submitButton.innerHTML = originalText;
-                submitButton.disabled = false;
-            }, 1000);
+                if (success.parentNode) success.remove();
+            }, 8000);
         }
         
         function storeMessage(data) {
