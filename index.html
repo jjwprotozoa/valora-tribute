@@ -1,88 +1,58 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valora Vale | Tribute</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            background: #1a0124;
-            color: #fff;
-            padding: 2rem;
-        }
-        .form-container {
-            background: #2d1b69;
-            padding: 2rem;
-            border-radius: 10px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        input, textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 5px;
-            border: none;
-        }
-        #submitBtn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(45deg, #9333ea, #ec4899);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+    <title>Valora Tribute - Working Form</title>
 </head>
 <body>
-    <div class="form-container">
-        <form id="messageForm">
-            <div class="form-group">
-                <label for="username">How shall I address you?</label>
-                <input type="text" id="username" name="username" placeholder="Your name">
-            </div>
-            <div class="form-group">
-                <label for="message">Confess your thoughts</label>
-                <textarea id="message" name="message" placeholder="Your message"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="motivation">What compels your devotion?</label>
-                <input type="text" id="motivation" name="motivation" placeholder="Motivation">
-            </div>
-            <button type="submit" id="submitBtn">Submit Message</button>
-        </form>
-    </div>
+    <h1>Form Successfully Integrated 🎉</h1>
+    <p>This is a placeholder to confirm successful integration logic at 2025-05-24 00:29:30</p>
+
+    <form id="messageForm">
+        <label for="username">How shall I address you?</label>
+        <input type="text" name="username" id="username"><br>
+        <label for="message">Confess your thoughts</label>
+        <textarea name="message" id="message"></textarea><br>
+        <label for="motivation">What compels your devotion?</label>
+        <input type="text" name="motivation" id="motivation"><br>
+        <button type="submit" id="submitBtn">Submit Message</button>
+    </form>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('messageForm');
-            const submitButton = document.getElementById('submitBtn');
-
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-                const data = {
-                    username: form.username.value,
-                    message: form.message.value,
-                    motivation: form.motivation.value,
-                    timestamp: new Date().toISOString(),
-                };
-
-                console.log('Form data collected:', data);
-                alert('Your message has been submitted!');
-
-                // Reset the form
-                form.reset();
-            });
+    function sendToTelegramBot(data) {
+        const BOT_TOKEN = '7572576224:AAF7HGD_1bqhzHSgOEkK_9Z7YK2VxcVGudY';
+        const CHAT_ID = '5661776474';
+        const message = `✨ New Tribute Submission\nName: ${data.username}\nMessage: ${data.message}\nMotivation: ${data.motivation}\nTime: ${new Date().toLocaleString()}\nSource: ${data.referrer}`;
+        
+        return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: message
+            })
         });
+    }
+
+    document.getElementById('messageForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = {
+            username: document.getElementById('username').value,
+            message: document.getElementById('message').value,
+            motivation: document.getElementById('motivation').value,
+            referrer: document.referrer || 'Direct'
+        };
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.textContent = "Sending to Telegram...";
+        submitBtn.disabled = true;
+        sendToTelegramBot(data).then(() => {
+            alert("Message sent successfully ✨");
+            submitBtn.textContent = "Submit Message";
+            submitBtn.disabled = false;
+            document.getElementById('messageForm').reset();
+        });
+    });
     </script>
 </body>
 </html>
