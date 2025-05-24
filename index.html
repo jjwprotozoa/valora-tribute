@@ -88,7 +88,7 @@
 
       const telegramData = {
         chat_id: TELEGRAM_CHAT_ID,
-        text: `🌟 <b>New Tribute Form Submission</b>\n👤 <b>Name:</b> ${data.username}\n💭 <b>Message:</b> ${data.message}\n🎯 <b>Motivation:</b> ${data.motivation}\n🕐 <b>Time:</b> ${new Date(data.timestamp).toLocaleString()}\n🔗 <b>Source:</b> ${data.referrer}`,
+        text: `🌟 <b>Tribute Received</b>\n\n👤 <b>From:</b> ${data.username}\n📝 <b>Confession:</b>\n${data.message}\n\n🎯 <b>Motivation:</b> ${data.motivation}\n⏰ <b>Received:</b> ${new Date(data.timestamp).toLocaleString()}\n🔗 <b>Origin:</b> <a href="${data.referrer}">${data.referrer}</a>\n\n✨ <i>She listens. She decides.</i>`,
         parse_mode: 'HTML'
       };
 
