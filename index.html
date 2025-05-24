@@ -499,7 +499,7 @@
             <p class="cta-subtitle">Ready to begin? Message me directly through my bot.</p>
         </section>
 
-        <form class="message-form" method="post" action="#" id="messageForm">
+        <form class="message-form" method="post" action="javascript:void(0);" id="messageForm">
             <h3 style="text-align: center; margin-bottom: 1.5rem; color: #c084fc;">Share Your Thoughts (Optional)</h3>
             
             <div class="form-group">
@@ -520,6 +520,16 @@
             <button type="submit" id="submitBtn" style="width: 100%; padding: 1rem; background: linear-gradient(45deg, #9333ea, #ec4899); border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer;">
                 Submit Message
             </button>
+            
+            <!-- Fallback for no-JS users -->
+            <noscript>
+                <div style="margin-top: 1rem; padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 8px; text-align: center;">
+                    <p style="margin-bottom: 1rem; color: #c084fc;">JavaScript is required for form submission.</p>
+                    <a href="https://t.me/valoravault_bot" target="_blank" style="color: #ec4899; text-decoration: none; font-weight: bold;">
+                        💬 Contact me directly on Telegram instead
+                    </a>
+                </div>
+            </noscript>
         </form>
 
         <footer class="footer">
@@ -723,14 +733,20 @@
         function setupFormHandler() {
             const form = document.getElementById('messageForm');
             if (form) {
+                console.log('Setting up form handler...');
                 form.addEventListener('submit', function(event) {
+                    console.log('Form submitted, preventing default...');
                     event.preventDefault(); // Prevent default form submission
+                    event.stopPropagation(); // Stop event bubbling
                     handleMessage(event);
                 });
+            } else {
+                console.error('Form not found! ID: messageForm');
             }
         }
 
         function handleMessage(event) {
+            console.log('handleMessage called');
             event.preventDefault();
             
             const formData = new FormData(event.target);
@@ -742,15 +758,25 @@
                 referrer: document.referrer || 'Direct'
             };
             
+            console.log('Form data collected:', data);
+            
             // Show loading state
             const submitButton = document.getElementById('submitBtn');
+            if (!submitButton) {
+                console.error('Submit button not found!');
+                return;
+            }
+            
             const originalText = submitButton.innerHTML;
             submitButton.innerHTML = '<span class="loading-spinner"></span>Sending to Telegram...';
             submitButton.disabled = true;
             
             // Send to Telegram
             sendToTelegramBot(data)
-                .then(response => response.json())
+                .then(response => {
+                    console.log('Telegram API response received');
+                    return response.json();
+                })
                 .then(result => {
                     console.log('Telegram response:', result);
                     if (result.ok) {
