@@ -964,9 +964,12 @@
         }
         
         window.closeExitMessage = function() {
-            const overlay = document.querySelector('div[style*="z-index: 9999"]');
-            if (overlay) {
-                overlay.style.animation = 'fadeOut 0.3s ease-in forwards';
-                setTimeout(() => overlay.remove(), 300);
-            }
-        }
+           const overlay = document.querySelector('div[style*="z-index: 9999"]');
+           if (overlay) {
+               overlay.style.animation = 'fadeOut 0.3s ease-in forwards';
+               setTimeout(() => overlay.remove(), 300);
+           }
+       }
+   </script>
+</body>
+</html>
