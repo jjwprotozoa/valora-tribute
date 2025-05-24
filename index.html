@@ -725,9 +725,58 @@
 
         // Initialize particles and form handler when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            setupExitIntent();
-            setupFormHandler();
+            console.log('🎯 DOM Content Loaded - Starting initialization...');
+            
+            try {
+                createParticles();
+                console.log('✅ Particles created');
+            } catch (e) {
+                console.error('❌ Particles failed:', e);
+            }
+            
+            try {
+                setupExitIntent();
+                console.log('✅ Exit intent setup');
+            } catch (e) {
+                console.error('❌ Exit intent failed:', e);
+            }
+            
+            try {
+                setupFormHandler();
+                console.log('✅ Form handler setup attempted');
+            } catch (e) {
+                console.error('❌ Form handler failed:', e);
+            }
+            
+            // Manual check for elements
+            const form = document.getElementById('messageForm');
+            const button = document.getElementById('submitBtn');
+            
+            console.log('🔍 Element check:');
+            console.log('Form found:', !!form, form);
+            console.log('Button found:', !!button, button);
+            
+            // Backup event listener in case setupFormHandler fails
+            if (form && button) {
+                console.log('🔧 Adding backup form listener...');
+                form.onsubmit = function(e) {
+                    console.log('🎯 Backup form submit triggered!');
+                    e.preventDefault();
+                    handleMessage(e);
+                    return false;
+                };
+                
+                // Also try direct button click handler
+                button.onclick = function(e) {
+                    console.log('🎯 Direct button click triggered!');
+                    e.preventDefault();
+                    
+                    // Simulate form submission
+                    const formEvent = new Event('submit', { bubbles: true, cancelable: true });
+                    form.dispatchEvent(formEvent);
+                    return false;
+                };
+            }
         });
         
         function setupFormHandler() {
